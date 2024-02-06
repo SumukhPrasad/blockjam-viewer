@@ -1,0 +1,21 @@
+{
+  "name": "blockjam-viewer",
+  "version": "1.0.0",
+  "description": "Isometric live-view for BlockJam.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.90.1",
+    "webpack-dev-server": "^4.15.1",
+    "wepack-cli": "^0.0.1-security"
+  },
+  "dependencies": {
+    "html-webpack-plugin": "^5.6.0",
+    "stats.js": "^0.17.0",
+    "three": "^0.161.0"
+  }
+}
