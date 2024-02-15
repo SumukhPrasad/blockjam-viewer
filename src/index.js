@@ -1,3 +1,17 @@
+class IsometricViewer {
+	constructor() {
+	}
+
+	initializeViewer() {
+		alert(0)
+	}
+}
+
+var viewer = new IsometricViewer()
+viewer.initializeViewer()
+
+
+/*
 var THREE = require('three');
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
@@ -31,13 +45,11 @@ const data = [
 	const scene = new THREE.Scene();
    
 	// Create a camera
-	const camera = new THREE.PerspectiveCamera(
-	  75,
-	  window.innerWidth / window.innerHeight,
-	  0.1,
-	  1000
-	);
-	camera.position.z = 5;
+	const aspect = window.innerWidth / window.innerHeight;
+	const d = 10;
+	var camera = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
+
+	camera.position.set( 20, 20, 20 );
    
 	// Create a renderer
 	const renderer = new THREE.WebGLRenderer();
@@ -74,3 +86,4 @@ const data = [
    
    // Call the function to render the 3D scene
    render3DScene();
+*/
