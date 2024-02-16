@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import Skybox from '../3d-elements/skybox/skybox';
+
 
 class ThreeDimensionalEnvironment {
 	constructor (cameraDistance, cameraX, cameraY, cameraZ, parent, statsHandler) {
@@ -14,7 +16,10 @@ class ThreeDimensionalEnvironment {
 		}
 		this.parent = parent;
 		this.scene = new THREE.Scene();
-		this.camera = new THREE.OrthographicCamera( - this.cameraProperties.distance * this.cameraProperties.aspect, this.cameraProperties.distance * this.cameraProperties.aspect, this.cameraProperties.distance, - this.cameraProperties.distance, 1, 1000 );
+		//this.camera = new THREE.OrthographicCamera( - this.cameraProperties.distance * this.cameraProperties.aspect, this.cameraProperties.distance * this.cameraProperties.aspect, this.cameraProperties.distance, - this.cameraProperties.distance, 1, 1000 );
+		this.camera = new THREE.PerspectiveCamera();
+
+		this.camera.aspect = this.cameraProperties.aspect;
 		
 		this.camera.position.set( 
 			this.cameraProperties.position.x,
@@ -28,7 +33,7 @@ class ThreeDimensionalEnvironment {
 		};
 
 		this.devicePixelRatio = window.devicePixelRatio;
-		this.renderer = new THREE.WebGLRenderer(/*{antialias: true}*/);
+		this.renderer = new THREE.WebGLRenderer({antialias: true});
 		this.renderer.setSize( this.rendererProperties.width, this.rendererProperties.height );
 		this._resize()
 		window.addEventListener( 'resize', ()=>{this._resize()}, false );
@@ -48,12 +53,13 @@ class ThreeDimensionalEnvironment {
 
 		this.statsHandler = statsHandler;
 
-
+		this.skybox = new Skybox(this.scene)
 
 		this.animate = this.animate.bind(this);
 	}
 
 	initialize() {
+		this.skybox.initialize();
 		this.parent.appendChild( this.renderer.domElement );
 	}
 
@@ -69,13 +75,13 @@ class ThreeDimensionalEnvironment {
 		this.rendererProperties.width = this.parent.offsetWidth;
 		this.rendererProperties.height = this.parent.offsetHeight;
 		this.cameraProperties.aspect = this.rendererProperties.width / this.rendererProperties.height;
-		
+		this.camera.aspect = this.cameraProperties.aspect;
 		this.renderer.setSize( this.rendererProperties.width, this.rendererProperties.height );
 		
-		this.camera.left = - this.cameraProperties.distance * this.cameraProperties.aspect;
+		/*this.camera.left = - this.cameraProperties.distance * this.cameraProperties.aspect;
 		this.camera.right = this.cameraProperties.distance * this.cameraProperties.aspect;
 		this.camera.top = this.cameraProperties.distance;
-		this.camera.bottom = - this.cameraProperties.distance;
+		this.camera.bottom = - this.cameraProperties.distance;*/
 
 		this.camera.updateProjectionMatrix();
 

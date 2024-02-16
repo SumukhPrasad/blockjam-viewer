@@ -6,7 +6,7 @@ class IsometricViewer {
 		this.parentElement = parent;
 		this.stats = new StatsPanel(parent);
 		this.env = new ThreeDimensionalEnvironment(
-			10, 10, 10, 10, parent, this.stats.stats
+			20, 15, 10, 15, parent, this.stats.stats
 		);
 	}
 
