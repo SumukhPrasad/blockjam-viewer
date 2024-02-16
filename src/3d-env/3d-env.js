@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 class ThreeDimensionalEnvironment {
-	constructor (rendererWidth, rendererHeight, cameraDistance, cameraX, cameraY, cameraZ, parent, statsHandler) {
+	constructor (cameraDistance, cameraX, cameraY, cameraZ, parent, statsHandler) {
 		this.cameraProperties = {
 			distance: cameraDistance,
 			position: {
@@ -10,7 +10,7 @@ class ThreeDimensionalEnvironment {
 				y: cameraY,
 				z: cameraZ
 			},
-			aspect: rendererWidth/rendererHeight
+			aspect: parent.offsetWidth/parent.offsetHeight
 		}
 		this.parent = parent;
 		this.scene = new THREE.Scene();
@@ -23,13 +23,15 @@ class ThreeDimensionalEnvironment {
 		);
 
 		this.rendererProperties = {
-			width: rendererWidth,
-			height: rendererHeight
+			width: parent.offsetWidth,
+			height: parent.offsetHeight
 		};
 
+		this.devicePixelRatio = window.devicePixelRatio;
 		this.renderer = new THREE.WebGLRenderer(/*{antialias: true}*/);
-
 		this.renderer.setSize( this.rendererProperties.width, this.rendererProperties.height );
+		this._resize()
+		window.addEventListener( 'resize', ()=>{this._resize()}, false );
 
 		this.controls = new OrbitControls( this.camera, this.renderer.domElement );
 
@@ -47,14 +49,11 @@ class ThreeDimensionalEnvironment {
 		this.statsHandler = statsHandler;
 
 
+
 		this.animate = this.animate.bind(this);
 	}
 
 	initialize() {
-		const pixelRatio = window.devicePixelRatio;
-		if (typeof pixelRatio !== "undefined") {
-			//this.renderer.setSize( this.rendererProperties.width*pixelRatio, this.rendererProperties.height*pixelRatio, false );
-		}
 		this.parent.appendChild( this.renderer.domElement );
 	}
 
@@ -64,6 +63,25 @@ class ThreeDimensionalEnvironment {
 		this.renderer.render(this.scene, this.camera);
 		this.statsHandler.end();
 		requestAnimationFrame(this.animate);
+	}
+
+	_resize() {
+		this.rendererProperties.width = this.parent.offsetWidth;
+		this.rendererProperties.height = this.parent.offsetHeight;
+		this.cameraProperties.aspect = this.rendererProperties.width / this.rendererProperties.height;
+		
+		this.renderer.setSize( this.rendererProperties.width, this.rendererProperties.height );
+		
+		this.camera.left = - this.cameraProperties.distance * this.cameraProperties.aspect;
+		this.camera.right = this.cameraProperties.distance * this.cameraProperties.aspect;
+		this.camera.top = this.cameraProperties.distance;
+		this.camera.bottom = - this.cameraProperties.distance;
+
+		this.camera.updateProjectionMatrix();
+
+		if (this.devicePixelRatio>1){
+			this.renderer.setSize( this.rendererProperties.width*this.devicePixelRatio, this.rendererProperties.height*this.devicePixelRatio, false );
+		}
 	}
 }
 
