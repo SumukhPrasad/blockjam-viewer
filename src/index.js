@@ -1,14 +1,28 @@
+import ThreeDimensionalEnvironment from "./3d-env/3d-env"
+import StatsPanel from "./3d-env/stats-panel";
+
 class IsometricViewer {
-	constructor() {
+	constructor(parent) {
+		this.parentElement = parent;
+		this.stats = new StatsPanel(parent);
+		this.env = new ThreeDimensionalEnvironment(
+			parent.offsetWidth, parent.offsetHeight, 10, 10, 10, 10, parent, this.stats.stats
+		);
 	}
 
 	initializeViewer() {
-		alert(0)
+		this.env.initialize();
+		this.stats.initialize();
+	}
+
+	startAnimation() {
+		this.env.animate()
 	}
 }
 
-var viewer = new IsometricViewer()
+var viewer = new IsometricViewer(document.getElementById("isometric-viewer-container"))
 viewer.initializeViewer()
+viewer.startAnimation()
 
 
 /*
