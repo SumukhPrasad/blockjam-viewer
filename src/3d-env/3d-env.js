@@ -101,6 +101,7 @@ class ThreeDimensionalEnvironment {
 		const dirLightHelper = new THREE.DirectionalLightHelper( dirLight, 10 );
 		this.scene.add( dirLightHelper );
 	}
+	
 	animate() {
 		this.statsHandler.begin();
 		this.controls.update();
