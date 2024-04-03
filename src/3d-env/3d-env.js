@@ -18,7 +18,6 @@ class ThreeDimensionalEnvironment {
 		}
 		this.parent = parent;
 		this.scene = new THREE.Scene();
-		//this.camera = new THREE.OrthographicCamera( - this.cameraProperties.distance * this.cameraProperties.aspect, this.cameraProperties.distance * this.cameraProperties.aspect, this.cameraProperties.distance, - this.cameraProperties.distance, 1, 1000 );
 		this.camera = new THREE.PerspectiveCamera();
 
 		this.camera.aspect = this.cameraProperties.aspect;
