@@ -115,11 +115,6 @@ class ThreeDimensionalEnvironment {
 		this.cameraProperties.aspect = this.rendererProperties.width / this.rendererProperties.height;
 		this.camera.aspect = this.cameraProperties.aspect;
 		this.renderer.setSize( this.rendererProperties.width, this.rendererProperties.height );
-		
-		/*this.camera.left = - this.cameraProperties.distance * this.cameraProperties.aspect;
-		this.camera.right = this.cameraProperties.distance * this.cameraProperties.aspect;
-		this.camera.top = this.cameraProperties.distance;
-		this.camera.bottom = - this.cameraProperties.distance;*/
 
 		this.camera.updateProjectionMatrix();
 
