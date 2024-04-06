@@ -31,8 +31,7 @@ class Platform {
                               this.scene.add(model);
                          },
                          (xhr) => {
-                              // Loading progress callback
-                              // console.log('loaded');
+                              // Loading progress callback if required
                          },
                          (error) => {
                               console.error('Error loading GLTF model', error);
